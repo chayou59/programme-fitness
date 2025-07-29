@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Programme Anti-Cellulite - 7 jours</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #c2185b, #ad1457);
+      color: white;
+      padding: 30px;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 2.2em;
+      margin-bottom: 10px;
+    }
+
+    .header p {
+      opacity: 0.9;
+      font-size: 1.1em;
+    }
+
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      background: #f8f9fa;
+      border-bottom: 2px solid #e9ecef;
+      overflow-x: auto;
+    }
+
+    .tab {
+      flex: 1;
+      min-width: 100px;
+      padding: 15px 10px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      border-bottom: 3px solid transparent;
+    }
+
+    .tab:hover {
+      background: #e9ecef;
+    }
+
+    .tab.active {
+      background: white;
+      border-bottom-color: #c2185b;
+      color: #c2185b;
+    }
+
+    .day-content {
+      display: none;
+      padding: 30px;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .day-content.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card {
+      background: white;
+      border: 1px solid #e9ecef;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+      transition: transform 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+    }
+
+    .card h3 {
+      color: #c2185b;
+      margin-bottom: 15px;
+      font-size: 1.3em;
+    }
+
+    .card p {
+      line-height: 1.6;
+      color: #555;
+      margin-bottom: 15px;
+    }
+
+    .card ul {
+      padding-left: 20px;
+      line-height: 1.8;
+    }
+
+    .card li {
+      margin-bottom: 8px;
+    }
+
+    .done-btn {
+      background: linear-gradient(135deg, #4caf50, #45a049);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 8px rgba(76, 175, 80, 0.3);
+    }
+
+    .done-btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(76, 175, 80, 0.4);
+    }
+
+    .done-btn:disabled {
+      background: #4caf50;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .track-section {
+      background: #f8f9fa;
+      padding: 30px;
+      border-top: 2px solid #e9ecef;
+    }
+
+    .track-section h2 {
+      color: #c2185b;
+      margin-bottom: 25px;
+      text-align: center;
+    }
+
+    .track-section input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: 2px solid #e9ecef;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: border-color 0.3s ease;
+    }
+
+    .track-section input:focus {
+      outline: none;
+      border-color: #c2185b;
+    }
+
+    .track-section button {
+      width: 100%;
+      background: linear-gradient(135deg, #c2185b, #ad1457);
+      color: white;
+      border: none;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .track-section button:hover {
+      transform: translateY(-2px);
+    }
+
+    .meal-day {
+      display: grid;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .meal {
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 8px;
+      border-left: 4px solid #c2185b;
+    }
+
+    .meal strong {
+      color: #c2185b;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        margin: 10px;
+        border-radius: 10px;
+      }
+
+      .header {
+        padding: 20px;
+      }
+
+      .header h1 {
+        font-size: 1.8em;
+      }
+
+      .day-content {
+        padding: 20px;
+      }
+
+      .tabs {
+        flex-direction: column;
+      }
+
+      .tab {
+        flex: none;
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🥗 Programme Anti-Cellulite</h1>
+      <p>7 jours pour retrouver forme et énergie</p>
+    </div>
+
+    <div class="tabs">
+      <button class="tab active" onclick="showDay(event, 'regime')">Régime</button>
+      <button class="tab" onclick="showDay(event, 'lundi')">Lundi</button>
+      <button class="tab" onclick="showDay(event, 'mardi')">Mardi</button>
+      <button class="tab" onclick="showDay(event, 'mercredi')">Mercredi</button>
+      <button class="tab" onclick="showDay(event, 'jeudi')">Jeudi</button>
+      <button class="tab" onclick="showDay(event, 'vendredi')">Vendredi</button>
+      <button class="tab" onclick="showDay(event, 'samedi')">Samedi</button>
+      <button class="tab" onclick="showDay(event, 'dimanche')">Dimanche</button>
+    </div>
+
+    <div class="day-content active" id="regime">
+      <h2 style="text-align:center; color:#c2185b;">🥗 Mon Régime Anti-Cellulite (7 jours)</h2>
+      <div class="card">
+        <p><strong>Objectifs :</strong> perte de poids, drainage, équilibre hormonal post-ménopause.</p>
+        <ul>
+          <li>✅ 2L d'eau par jour (avec citron ou tisane drainante)</li>
+          <li>✅ 3 repas + 1 à 2 collations protéinées</li>
+          <li>✅ Skyr, fromage blanc, yaourt nature OK</li>
+          <li>🚫 Lait liquide / biscuits / jus industriels</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>📅 Lundi</h3>
+        <div class="meal-day">
+          <div class="meal">
+            <strong>Matin :</strong> Skyr + kiwi + 10 amandes
+          </div>
+          <div class="meal">
+            <strong>Midi :</strong> Poulet grillé + brocolis vapeur + riz complet
+          </div>
+          <div class="meal">
+            <strong>Soir :</strong> Omelette + courgettes poêlées
+          </div>
+          <div class="meal">
+            <strong>Snack :</strong> 1 compote sans sucre
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>📅 Mardi</h3>
+        <div class="meal-day">
+          <div class="meal">
+            <strong>Matin :</strong> Fromage blanc + myrtilles + graines de chia
+          </div>
+          <div class="meal">
+            <strong>Midi :</strong> Filet de saumon + fenouil + quinoa
+          </div>
+          <div class="meal">
+            <strong>Soir :</strong> Soupe de légumes + œuf dur
+          </div>
+          <div class="meal">
+            <strong>Snack :</strong> Skyr + cannelle
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>📅 Mercredi</h3>
+        <div class="meal-day">
+          <div class="meal">
+            <strong>Matin :</strong> Skyr + banane + flocons d'avoine
+          </div>
+          <div class="meal">
+            <strong>Midi :</strong> Steak haché 5% + haricots verts + patate douce
+          </div>
+          <div class="meal">
+            <strong>Soir :</strong> Courgettes farcies végétariennes
+          </div>
+          <div class="meal">
+            <strong>Snack :</strong> 1 carré de chocolat noir 85%
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>📅 Jeudi</h3>
+        <div class="meal-day">
+          <div class="meal">
+            <strong>Matin :</strong> Pain complet + œuf dur + tomate cerise
+          </div>
+          <div class="meal">
+            <strong>Midi :</strong> Dinde + salade verte + lentilles
+          </div>
+          <div class="meal">
+            <strong>Soir :</strong> Ratatouille + pois chiches
+          </div>
+          <div class="meal">
+            <strong>Snack :</strong> Tisane drainante + noix
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>📅 Vendredi</h3>
+        <div class="meal-day">
+          <div class="meal">
+            <strong>Matin :</strong> Skyr + kiwi + graines de lin
+          </div>
+          <div class="meal">
+            <strong>Midi :</strong> Thon + riz complet + carottes râpées
+          </div>
+          <div class="meal">
+            <strong>Soir :</strong> Velouté de légumes + fromage frais
+          </div>
+          <div class="meal">
+            <strong>Snack :</strong> Fromage blanc + framboises
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>📅 Samedi</h3>
+        <div class="meal-day">
+          <div class="meal">
+            <strong>Matin :</strong> Fromage blanc + compote sans sucre
+          </div>
+          <div class="meal">
+            <strong>Midi :</strong> Poulet rôti + haricots verts + riz semi-complet
+          </div>
+          <div class="meal">
+            <strong>Soir :</strong> Omelette + champignons
+          </div>
+          <div class="meal">
+            <strong>Snack :</strong> Tisane + carré chocolat noir
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>📅 Dimanche</h3>
+        <div class="meal-day">
+          <div class="meal">
+            <strong>Matin :</strong> Skyr + fruits rouges + noix
+          </div>
+          <div class="meal">
+            <strong>Midi :</strong> Pavé de saumon + légumes vapeur
+          </div>
+          <div class="meal">
+            <strong>Soir :</strong> Soupe + œuf + fromage frais
+          </div>
+          <div class="meal">
+            <strong>Snack :</strong> 1 poignée d'amandes
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="lundi" class="day-content">
+      <h2>Programme du Lundi</h2>
+      <div class="card">
+        <h3>🌿 Séance Bluefin (15 min)</h3>
+        <p>Squats + gainage debout</p>
+        <button class="done-btn" onclick="markDone(this)">Marquer comme fait</button>
+      </div>
+      <div class="card">
+        <h3>🌿 Séance Wellbox (15 min)</h3>
+        <p>Cuisses arrière et hanches</p>
+        <button class="done-btn" onclick="markDone(this)">Marquer comme fait</button>
+      </div>
+    </div>
+
+    <div id="mardi" class="day-content">
+      <h2>Programme du Mardi</h2>
+      <div class="card">
+        <h3>🌿 Séance Bluefin (15 min)</h3>
+        <p>Fessiers + bras</p>
+        <button class="done-btn" onclick="markDone(this)">Marquer comme fait</button>
+      </div>
+      <div class="card">
+        <h3>🌿 Séance Wellbox (15 min)</h3>
+        <p>Ventre (lipomassage)</p>
+        <button class="done-btn" onclick="markDone(this)">Marquer comme fait</button>
+      </div>
+    </div>
+
+    <div id="mercredi" class="day-content">
+      <h2>Programme du Mercredi</h2>
+      <div class="card">
+        <h3>Repos</h3>
+        <p>Récupération active ou détente.</p>
+      </div>
+    </div>
+
+    <div id="jeudi" class="day-content">
+      <h2>Programme du Jeudi</h2>
+      <div class="card">
+        <h3>🌿 Séance Bluefin (15 min)</h3>
+        <p>Cuisses + bras</p>
+        <button class="done-btn" onclick="markDone(this)">Marquer comme fait</button>
+      </div>
+    </div>
+
+    <div id="vendredi" class="day-content">
+      <h2>Programme du Vendredi</h2>
+      <div class="card">
+        <h3>🌿 Séance Bluefin (15 min)</h3>
+        <p>Abdos + fessiers</p>
+        <button class="done-btn" onclick="markDone(this)">Marquer comme fait</button>
+      </div>
+      <div class="card">
+        <h3>🌿 Séance Wellbox (15 min)</h3>
+        <p>Dos + hanches</p>
+        <button class="done-btn" onclick="markDone(this)">Marquer comme fait</button>
+      </div>
+    </div>
+
+    <div id="samedi" class="day-content">
+      <h2>Programme du Samedi</h2>
+      <div class="card">
+        <h3>Repos</h3>
+        <p>Journée libre.</p>
+      </div>
+    </div>
+
+    <div id="dimanche" class="day-content">
+      <h2>Programme du Dimanche</h2>
+      <div class="card">
+        <h3>🌿 Séance Bluefin (15 min)</h3>
+        <p>Cuisses + abdos</p>
+        <button class="done-btn" onclick="markDone(this)">Marquer comme fait</button>
+      </div>
+      <div class="card">
+        <h3>🌿 Séance Wellbox (15 min)</h3>
+        <p>Jambes (tonification)</p>
+        <button class="done-btn" onclick="markDone(this)">Marquer comme fait</button>
+      </div>
+    </div>
+
+    <div class="track-section">
+      <h2>📊 Suivi hebdomadaire</h2>
+      <input type="text" placeholder="Poids (kg)" id="poids" />
+      <input type="text" placeholder="Tour de taille (cm)" id="taille" />
+      <input type="text" placeholder="Tour de hanches (cm)" id="hanches" />
+      <input type="text" placeholder="Tour de cuisses (cm)" id="cuisses" />
+      <input type="text" placeholder="Énergie ressentie (1-10)" id="energie" />
+      <input type="text" placeholder="Commentaire de la semaine" id="commentaire" />
+      <button onclick="saveWeekData()">✅ Enregistrer ma semaine</button>
+    </div>
+  </div>
+
+  <script>
+    function showDay(event, dayId) {
+      document.querySelectorAll('.day-content').forEach(div => div.classList.remove('active'));
+      document.querySelectorAll('.tab').forEach(btn => btn.classList.remove('active'));
+      document.getElementById(dayId).classList.add('active');
+      event.target.classList.add('active');
+    }
+
+    function markDone(button) {
+      button.textContent = "✅ Fait !";
+      button.disabled = true;
+      button.style.background = '#4caf50';
+
+      // Animation de succès
+      button.style.transform = 'scale(1.05)';
+      setTimeout(() => {
+        button.style.transform = 'scale(1)';
+      }, 200);
+    }
+
+    function saveWeekData() {
+      const data = {
+        poids: document.getElementById('poids').value,
+        taille: document.getElementById('taille').value,
+        hanches: document.getElementById('hanches').value,
+        cuisses: document.getElementById('cuisses').value,
+        energie: document.getElementById('energie').value,
+        commentaire: document.getElementById('commentaire').value,
+        date: new Date().toLocaleDateString('fr-FR')
+      };
+
+      // Afficher les données dans la console pour debug
+      console.log('Données enregistrées:', data);
+      alert('✅ Données enregistrées avec succès !');
+
+      // Réinitialiser le formulaire
+      document.querySelectorAll('.track-section input').forEach(input => input.value = '');
+    }
+
+    // Charger les données au démarrage
+    window.addEventListener('load', function() {
+      console.log('Application chargée avec succès !');
+    });
+  </script>
+</body>
+</html>
